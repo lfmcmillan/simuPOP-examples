@@ -40,7 +40,7 @@ def simuSelfing(perc, N, n_rep, gen):
         ],
         gen = gen
     )
-    print simu.dvars(0).ld_hist
+    print(simu.dvars(0).ld_hist)
     return 0
 
 
