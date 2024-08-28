@@ -13,7 +13,7 @@ from simuPOP import *
 try:
     from simuPOP.plotter import VarPlotter
 except:
-    print "simuRPy import failed. Please check your rpy installation."
+    print("simuRPy import failed. Please check your rpy installation.")
     useRPy = False
 else:
     useRPy = True
@@ -22,9 +22,9 @@ def I2k(pop, param):
     #stat(pop, alleleFreq=loci)
     I2k ={}
     for loc in param:
-        #print pop.dvars().alleleFreq[loc].values()[0]
+        #print(pop.dvars().alleleFreq[loc].values()[0])
         I2k[loc] = sum([x*x for x in pop.dvars().alleleFreq[loc].values()])
-        #print I2k
+        #print(I2k)
     pop.dvars().I2k = I2k
     return True            
 
@@ -87,5 +87,5 @@ if __name__ == '__main__':
     #             (0.5, 0.5, 0.5, 0.02, 0.1, 0.5, 0.9)):
     #    for rep in range(10):
     #        res = simulate(r, eta, size=10000, numLoci=2, gen=2000)
-    #        print >> resFile, r, eta, res, rep
+    #        print(r, eta, res, rep, file=resFile)
     simulate(0.5, 0.5, size=10000, numLoci=2, gen=200)
