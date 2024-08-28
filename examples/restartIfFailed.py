@@ -39,11 +39,11 @@ def simuRestartIfFailed(N, initFreq, freqRange, gen, genCheck):
             gen = gen
         )
         if evolved[0] != gen:
-            print 'Restart simulation due to allele frequency %.3f.' % \
-                simu.dvars(0).alleleFreq[0][1]
+            print('Restart simulation due to allele frequency %.3f.' % \
+                simu.dvars(0).alleleFreq[0][1])
         else:
-            print 'Allele frequency %.3f is within specified range.' % \
-                simu.dvars(0).alleleFreq[0][1]
+            print('Allele frequency %.3f is within specified range.' % \
+                simu.dvars(0).alleleFreq[0][1])
             break
 
 if __name__ == '__main__':
