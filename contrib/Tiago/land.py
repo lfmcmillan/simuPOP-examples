@@ -6,8 +6,8 @@ from sys import argv, exit
 #BATCHTESTING SKIP
 
 if len(argv)<1:
-    print "Syntax: epiState"
-    print "epiState=0 wild-recessive / =1 wild-dominant / =2 random "
+    print("Syntax: epiState")
+    print("epiState=0 wild-recessive / =1 wild-dominant / =2 random ")
     exit(-1)
 else:
     epiState = int(argv[1])
@@ -54,14 +54,14 @@ def geoChooser(pop, sp):
 
 
 def dmp(pop):
-    print "pSize", pop.popSize()    
+    print("pSize", pop.popSize())
     for ind in pop.individuals():
-        print ind.info(pop.infoIdx('x')),
-        print ind.info(pop.infoIdx('y')),
+        print(ind.info(pop.infoIdx('x')))
+        print(ind.info(pop.infoIdx('y')))
         numLoci = LOCIPERDIM*2
         numLoci *= 2
-        for i in range(numLoci): print ind.allele(i),
-        print
+        for i in range(numLoci): print(ind.allele(i))
+        print()
         pass
     return True
 
@@ -145,7 +145,7 @@ def killUnfit(pop):
         yFactor = getPenalty(maxY, y, yMut) 
         luck    = uniform(0,1)
         if luck>xFactor*yFactor:
-            #print x , y, xFactor, yFactor, luck
+            #print(x , y, xFactor, yFactor, luck)
             indivs.append(indPos)
     pop.removeIndividuals(indivs)
     return True
