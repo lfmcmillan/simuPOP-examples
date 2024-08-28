@@ -484,13 +484,13 @@ def outputStatistics(pop, args):
     gen = pop.gen()
     # see how long the simulation has been running
     if gen == burnin:
-        print "Start Population growth\t\t"
+        print("Start Population growth\t\t")
     elif gen == split:
-        print "Start no-migration stage\t\t"
+        print("Start no-migration stage\t\t")
     elif gen == mixing:
-        print "Start mixing\t\t"
+        print("Start mixing\t\t")
     elif gen == endGen:
-        print "End of simulation. \n"
+        print("End of simulation. \n")
     #
     #### preparations 
     # number of loci when not counting DSL
@@ -507,15 +507,15 @@ def outputStatistics(pop, args):
     # first, calculate LD and other statistics
     stat(pop, alleleFreq=DSL, Fst = nonDSL, heteroFreq = range(pop.totNumLoci()))
     # output D', allele frequency at split, mixing and endGen
-    print >> output, "Average Fst estimated from non-DSL at gen %d: %.4f \n" % (gen, pop.dvars().AvgFst)
-    print >> output, "\n\nAllele frequencies\nall\t",
+    print("Average Fst estimated from non-DSL at gen %d: %.4f \n" % (gen, pop.dvars().AvgFst), file=output)
+    print("\n\nAllele frequencies\nall\t", file=output)
     for d in DSL:
-        print >> output, '%.4f ' % (1. - pop.dvars().alleleFreq[d][0]),
+        print('%.4f ' % (1. - pop.dvars().alleleFreq[d][0]), file=output)
     for sp in range(pop.numSubPop()):
-        print >> output, "\n%d\t" % sp,
+        print("\n%d\t" % sp, file=output)
         for d in DSL:
-            print >> output, '%.4f ' % (1. - pop.dvars(sp).alleleFreq[d][0]),
-    print >> output, "\n",
+            print('%.4f ' % (1. - pop.dvars(sp).alleleFreq[d][0]), file=output)
+    print("\n", file=output)
     # hetero frequency
     AvgHetero = 0
     for d in range(pop.totNumLoci()):
@@ -524,7 +524,7 @@ def outputStatistics(pop, args):
     # save to pop
     pop.dvars().AvgHetero = AvgHetero
     # output it
-    print >> output, '\nAverage counted heterozygosity is %.4f.\n' % AvgHetero
+    print('\nAverage counted heterozygosity is %.4f.\n' % AvgHetero, file=output)
     return True
 
 
@@ -550,8 +550,8 @@ def simuComplexDisease(numChrom, numLoci, markerType, DSLafter, DSLdistTmp,
     else:
         DSLdist = DSLdistTmp
     if len(DSLafter) != len(DSLdist):
-        print 'DSLafter: %s' % DSLafter
-        print 'DSLdist: %s' % DSLdist
+        print('DSLafter: %s' % DSLafter)
+        print('DSLdist: %s' % DSLdist)
         raise exceptions.ValueError("Please specify DSL distance for each DSL.")
     numDSL = len(DSLafter)
     if burninGen > splitGen or splitGen > mixingGen or splitGen > endingGen:
@@ -590,7 +590,7 @@ def simuComplexDisease(numChrom, numLoci, markerType, DSLafter, DSLdistTmp,
     ###
     ### simulating Population frequency
     ### 
-    print '\n\nSimulating Trajectory of allele frequencies'
+    print('\n\nSimulating Trajectory of allele frequencies')
     # 1. define population size function
     def popSizeFunc(gen):
         if gen < burninGen:
@@ -613,7 +613,7 @@ def simuComplexDisease(numChrom, numLoci, markerType, DSLafter, DSLdistTmp,
     elif maxMutAge < minMutAge:
         raise exceptions.ValueError('maxMutAge needs to be greater than minMutAge.')
     elif maxMutAge > endingGen:
-        print 'maxMutAge should be smaller than endingGen, set it to endingGen.'
+        print('maxMutAge should be smaller than endingGen, set it to endingGen.')
         maxMutAge = endingGen
     traj = utils.simulateBackwardTrajectory(popSizeFunc, fitness=fitness, nLoci=len(DSLafter),
         endGen=endingGen, endFreq=curAlleleFreq, minMutAge=minMutAge,
@@ -832,7 +832,7 @@ def simuComplexDisease(numChrom, numLoci, markerType, DSLafter, DSLdistTmp,
     pop.dvars().recRate = recRate
     pop.dvars().numOffspring = numOffspring
     pop.dvars().numOffMode = numOffMode
-    print "Saving Population to " + filename + '.' + format + '\n'
+    print("Saving Population to " + filename + '.' + format + '\n')
     simu.population(0).save(filename)
     return True
 
@@ -869,4 +869,4 @@ if __name__ == '__main__':
         mutaRate, recRate, savedGen, numOffspring, numOffMode,
         dryrun, savePop, os.path.join(name, name + '.pop'))
     
-    print "Done!"
+    print("Done!")
