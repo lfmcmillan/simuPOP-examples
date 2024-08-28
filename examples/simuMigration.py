@@ -14,8 +14,8 @@ from simuPOP import *
 try:
     from simuPOP.plotter import VarPlotter
 except:
-    print "simuRPy import failed. Please check your rpy installation."
-    print "allele frquencies in subpopulations will not be plotted"
+    print("simuRPy import failed. Please check your rpy installation.")
+    print("allele frquencies in subpopulations will not be plotted")
     useRPy = False
 else:
     useRPy = True
@@ -115,5 +115,5 @@ if __name__ == '__main__':
     simuMigration(pars.subPopSize, pars.numOfSubPops, pars.m, pars.generations)
     #wait five seconds before exit
     if useRPy:
-        print "Figure will be closed after five seconds."
+        print("Figure will be closed after five seconds.")
         time.sleep(5)
