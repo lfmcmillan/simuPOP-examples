@@ -55,11 +55,11 @@ def simuFollowTrajectory(N, locus, initFreq, traj):
         postOps = [Stat(alleleFreq=[locus], at=-1)],
         gen = len(traj)
     )
-    print [simu.dvars(rep).alleleFreq[locus][1] for rep in range(5)]
+    print([simu.dvars(rep).alleleFreq[locus][1] for rep in range(5)])
 
 
 if __name__ == '__main__':
     traj = recordTrajectory(5000, 0.3, 100)
-    print 'Ending allele frequency is:', traj[-1]
+    print('Ending allele frequency is:', traj[-1])
     simuFollowTrajectory(5000, 50, 0.3, traj)
 
