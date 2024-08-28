@@ -12,8 +12,8 @@ from simuPOP import *
 try:
     from simuPOP.plotter import VarPlotter
 except:
-    print "simuRPy import failed. Please check your rpy installation."
-    print "Allele Frequencies will not be plotted"
+    print("simuRPy import failed. Please check your rpy installation.")
+    print("Allele Frequencies will not be plotted")
     useRPy = False
 else:
     useRPy = True
@@ -97,7 +97,7 @@ if __name__ == '__main__':
 
     # wait ten seconds before exit
     if useRPy:
-        print "Figure will be closed after 5 seconds."
+        print("Figure will be closed after 5 seconds.")
         time.sleep(5)
         
     
