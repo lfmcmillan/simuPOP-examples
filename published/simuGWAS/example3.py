@@ -150,14 +150,14 @@ def generateTrioSamples(logger=None):
         locus = pop.locusByName(DPL)
         # save a map file
         map = open('ex3.map', 'w')
-        print >> map, 'CHROMOSOME MARKER POSITION'
+        print('CHROMOSOME MARKER POSITION', file=map)
         for loc in range(pop.totNumLoci()):
-            print >> map, pop.chromName(0), pop.locusName(loc), pop.locusPos(loc)/1e6
+            print(pop.chromName(0), pop.locusName(loc), pop.locusPos(loc)/1e6, file=map)
         map.close()
         dat = open('ex3.dat', 'w')
-        print >> dat, 'A disease'
+        print('A disease', file=dat)
         for loc in range(pop.totNumLoci()):
-            print >> dat, 'M', pop.locusName(loc)
+            print('M', pop.locusName(loc), file=dat)
         dat.close()
         pop.addInfoFields(['ind_id', 'father_id', 'mother_id'])
         # keep parental generation
@@ -165,7 +165,7 @@ def generateTrioSamples(logger=None):
         # give everyone an unique ID
         tagID(pop, reset=True)
         stat(pop, genoFreq=locus)
-        print 'Genotype frequency: ', pop.dvars().genoFreq[locus]
+        print('Genotype frequency: ', pop.dvars().genoFreq[locus])
         pop.evolve(
             preOps = PyPenetrance(func=_myPenetrance, loci=[locus]),
             matingScheme=RandomMating(
@@ -197,7 +197,7 @@ def generateTrioSamples(logger=None):
             logger.info('Saving sample to file ' + popFile.replace('.pop', '.ped'))
         # write to merlin format
         csv = open(popFile.replace('.pop', '.ped'), 'w')
-        #print >> csv, ' '.join(pop.lociNames())
+        #print(' '.join(pop.lociNames()), file=csv)
         def genoString(ind):
             alleles = []
             for i in range(ind.totNumLoci()):
@@ -208,9 +208,9 @@ def generateTrioSamples(logger=None):
         for ind in sample.individuals():
             father = sample.indByID(ind.father_id)
             mother = sample.indByID(ind.mother_id)
-            print >> csv, famid, id, 0, 0, '1', '2' if father.affected() else '1', genoString(father)
-            print >> csv, famid, id+1, 0, 0, '2', '2' if mother.affected() else '1', genoString(mother)
-            print >> csv, famid, id+2, id, id+1, '1' if ind.sex() == MALE else '2', '2' if ind.affected() else '1', genoString(ind)
+            print(famid, id, 0, 0, '1', '2' if father.affected() else '1', genoString(father), file=csv)
+            print(famid, id+1, 0, 0, '2', '2' if mother.affected() else '1', genoString(mother), file=csv)
+            print(famid, id+2, id, id+1, '1' if ind.sex() == MALE else '2', '2' if ind.affected() else '1', genoString(ind), file=csv)
             famid += 1
             id += 3
         csv.close()
