@@ -415,7 +415,7 @@ def PlotSpectra(pop, param):
     # now, variable like perc holds results for the whole populations.
     # plot something:
     if pop.dvars().gen in saveAt:
-        print "Saving figure in %s%d.eps (instead of displaying it)" % (name,pop.dvars().gen)
+        print("Saving figure in %s%d.eps (instead of displaying it)" % (name,pop.dvars().gen))
         r.postscript(file=os.path.join(name, '%s%d.eps' % (name, pop.dvars().gen)), width=6, height=8 )
     #
     # set no conversion mode to save execution time
@@ -534,10 +534,10 @@ def simuCDCV(numDSL, initSpec, selModel,
         pop = Population(size=incFunc(0), loci=[1]*(numDSL), infoFields=['fitness'])
     else:
         try:
-            print "Resuming simulation from file ", resume, " at generation ", resumeAtGen
+            print("Resuming simulation from file ", resume, " at generation ", resumeAtGen)
             pop = LoadPopulation(resume)
         except exceptions.Exception, e:
-            print "Can not resume from population "+ resume + ". Aborting."
+            print("Can not resume from population "+ resume + ". Aborting.")
             raise e
 
     # determine mutation etc
@@ -625,8 +625,8 @@ def simuCDCV(numDSL, initSpec, selModel,
             # from before expansion.
             PyExec( '''for i in range(%d):
                 allelesBeforeExpansion.extend([alleleFreq[i].keys()])
-                print "Ancestral alleles before expansion: ", allelesBeforeExpansion[i]''' % \
-                numDSL, at=[burnin]),
+                print("Ancestral alleles before expansion: ", allelesBeforeExpansion[i]''' % \
+                numDSL, at=[burnin]))
             # visualizer
             PyOperator(func=PlotSpectra, param=(numDSL, saveAt, 50, dispPlot, plotLabel, name), step=update ),
             # monitor execution time
@@ -668,7 +668,7 @@ if __name__ == '__main__':
             from rpy import *
             r.library('lattice')
         except:
-            print "RPy module not found. Can not view spectrum history."
+            print("RPy module not found. Can not view spectrum history.")
             hasRPy = False
         else:
             hasRPy = True
