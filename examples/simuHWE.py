@@ -68,7 +68,7 @@ pop = Population(size=popSize, ploidy=2, loci=[1])
 pop.setVirtualSplitter(SexSplitter())
 
 # simulation
-print "p\tP00 (p^2)\tP01 (2p(1-p))\tP11 ((1-p)^2)"
+print("p\tP00 (p^2)\tP01 (2p(1-p))\tP11 ((1-p)^2)")
 pop.evolve(
     initOps = [
         InitSex(),
