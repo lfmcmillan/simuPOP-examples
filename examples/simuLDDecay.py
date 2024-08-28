@@ -16,8 +16,8 @@ from simuPOP import *
 try:
     from simuPOP.plotter import *
 except:
-    print "simuRPy import failed. Please check your rpy installation."
-    print "LD values will not be plotted"
+    print("simuRPy import failed. Please check your rpy installation.")
+    print("LD values will not be plotted")
     useRPy = False
 else:
     useRPy = True
@@ -97,7 +97,7 @@ def simuLDDecay(popSize, gen, recRate, numRep, method, saveFigure, useRPy):
         methodeval = r"'%.4f\t' % LD[0][1]"
 
     if useRPy:
-        print saveFigure
+        print(saveFigure)
         plotter = VarPlotter(methodplot, 
             ylim = [0, upperlim], saveAs=saveFigure,
             update = gen - 1, ylab=method, leaveOpen=True,
@@ -137,6 +137,6 @@ if __name__ == '__main__':
 
     # wait five seconds before exit
     if useRPy:
-        print "Figure will be closed after five seconds."
+        print("Figure will be closed after five seconds.")
         time.sleep(5)
 
