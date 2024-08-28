@@ -85,7 +85,7 @@ def avgNumOfAncestors(pop):
     totAnc = 0
     for indi in pop.individuals():
         totAnc += len(set(indi.genotype()));
-    print '%.2f\t' % (totAnc * 1.0 / pop.popSize()),
+    print('%.2f\t' % (totAnc * 1.0 / pop.popSize()))
     return True
 
 def simuNumOfAncestors(popSize, lociNum, gen, recRate, numRep):
