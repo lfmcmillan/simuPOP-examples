@@ -18,34 +18,6 @@ except:
 else:
     useRPy = True
 
-options = [
-    {'name':'popSize',
-     'default':100,
-     'label':'Population Size',
-     'type': 'integer',
-     'validator': 'popSize > 0',
-     },
-    {'name':'p',
-     'default':0.2,
-     'type': 'number',
-     'label':'Initial Allele Frequency',
-     'validator': 'p > 0 and p < 1',
-     },
-    {'name':'generations',
-     'default':100,
-     'label':'Number of Generations',
-     'type': 'integer',
-     'validator': 'generations > 0',
-     },
-    {'name':'replications',
-     'default':5,
-     'label':'Number of Replicates',
-     'type': 'integer',
-     'validator': 'replications > 0',
-     },
-]
-
-
 def simuGeneticDrift(popSize=100, p=0.2, generations=100, replications=5):
     '''Simulate the Genetic Drift as a result of random mating.'''
     # diploid population, one chromosome with 1 locus
@@ -86,20 +58,45 @@ def simuGeneticDrift(popSize=100, p=0.2, generations=100, replications=5):
         gen = generations
     )
 
+def check_positive_int(value):
+    ivalue = int(value)
+    if ivalue <= 0:
+        raise argparse.ArgumentTypeError("%s is an invalid positive int value" % value)
+    return ivalue
+
+def check_probability(value):
+    fvalue = float(value)
+    if fvalue <= 0 or fvalue >= 1:
+        raise argparse.ArgumentTypeError("%s is an invalid frequency value" % value)
+    return fvalue
+    
+
+
 if __name__ == '__main__':
-    # get all parameters
-    pars = simuOpt.Params(options, __doc__)
-    # cancelled
-    if not pars.getParam():
-        sys.exit(0)
-      
-    simuGeneticDrift(pars.popSize, pars.p, pars.generations, pars.replications)
+    import argparse
+    args = argparse.ArgumentParser(description="This program demonstrates changes of allele frequency on single locus due to genetic drift.")
+
+    args.add_argument("--popSize",
+        default=100,
+        type=check_positive_int,
+        help="Population Size")
+    args.add_argument("--p",
+        default=0.2,
+        type=check_probability,
+        help="Initial Allele Frequency")
+    args.add_argument("--generations",
+        default=100,
+        type=check_positive_int,
+        help="Number of Generations")
+    args.add_argument("--replications",
+        default=5,
+        type=check_positive_int,
+        help="Number of Replicates")
+    args = args.parse_args()
+
+    simuGeneticDrift(**vars(args))
 
     # wait ten seconds before exit
     if useRPy:
         print("Figure will be closed after 5 seconds.")
         time.sleep(5)
-        
-    
-
-    
