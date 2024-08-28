@@ -8,10 +8,10 @@ def calcFst(pop):
     stat(pop, structure=range(5), vars=['F_st', 'G_st'])
     sample = drawRandomSample(pop, sizes=[500]*pop.numSubPop())
     stat(sample, structure=range(5), vars=['F_st', 'G_st'])
-    print 'Gen: %3d Gst: %.6f (all), %.6f (sample) Fst: %.6f (all) %.6f (sample)' \
+    print('Gen: %3d Gst: %.6f (all), %.6f (sample) Fst: %.6f (all) %.6f (sample)' \
         % (pop.dvars().gen,
            pop.dvars().G_st, sample.dvars().G_st,
-           pop.dvars().F_st, sample.dvars().F_st)
+           pop.dvars().F_st, sample.dvars().F_st))
     return True
 
 pop = Population([10000]*2, loci=[1]*5, infoFields='migrate_to')
