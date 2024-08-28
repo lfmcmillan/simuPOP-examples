@@ -22,57 +22,8 @@ except:
 else:
     useRPy = True
 
-options = [
-    {'name':'size',
-     'default':1000,
-     'label':'Population Size',
-     'type':[int, long],
-     'validator':simuOpt.valueGT(0),
-    },
-    {'name':'gen',
-     'default':50,
-     'type':[int, long],
-     'label':'Generations to evolve',
-     'description':'Length of evolution',
-     'validator':simuOpt.valueGT(0)
-    },
-    {'name':'recRate',
-     'default':0.01,
-     'label':'Recombination Rate',
-     'type':[float],
-     'validator':simuOpt.valueBetween(0.,1.),
-    },
-    {'name':'numRep',
-     'default':5,
-     'label':'Number of Replicate',
-     'type':[int, long],
-     'description':'Number of replicates',
-     'validator':simuOpt.valueGT(0)
-    },
-    {'name':'measure',
-     'default':'D',
-     'label':'LD measure',
-     'description':'Choose linkage disequilibrium measure to be outputted.',
-     'chooseOneOf':['D', "D'", 'R2'],
-     'validator': simuOpt.valueOneOf(['D', "D'", 'R2']),
-    },
-    {'name':'saveFigure',
-     'label':'Save figure to filename',
-     'default':'',
-     'type':[str],
-     'description': '''If specified, save the figures to files such as filename_10.eps.
-        The format the figures is determined by file extension.
-        '''
-    },
-    {'name':'save',
-     'default':'',
-     'type':[str],
-     'description':'Save current paremeter set to specified file.'
-    },
-]
 
-
-def simuLDDecay(popSize, gen, recRate, numRep, method, saveFigure, useRPy):
+def simuLDDecay(popSize, gen, recRate, numRep, measure, saveFigure, useRPy):
     '''Simulate the decay of linkage disequilibrium as a result
     of recombination.
     '''
@@ -83,11 +34,11 @@ def simuLDDecay(popSize, gen, recRate, numRep, method, saveFigure, useRPy):
         rep = numRep)
 
     # get method value used to plot and evolve
-    if method=="D'":
+    if measure=="D'":
         methodplot = "LD_prime[0][1]"
         upperlim = 1
         methodeval = r"'%.4f\t' % LD_prime[0][1]"
-    elif method=='R2':
+    elif measure=='R2':
         methodplot = "R2[0][1]"
         upperlim = 1
         methodeval = r"'%.4f\t' % R2[0][1]"
@@ -121,22 +72,51 @@ def simuLDDecay(popSize, gen, recRate, numRep, method, saveFigure, useRPy):
         gen = gen
     )
 
+def check_positive_int(value):
+    ivalue = int(value)
+    if ivalue <= 0:
+        raise argparse.ArgumentTypeError("%s is an invalid positive int value" % value)
+    return ivalue
+
+def check_probability(value):
+    fvalue = float(value)
+    if fvalue <= 0 or fvalue >= 1:
+        raise argparse.ArgumentTypeError("%s is an invalid frequency value" % value)
+    return fvalue
 
 if __name__ == '__main__':
-    # get all parameters
-    pars = simuOpt.Params(options, __doc__)
-    # cancelled or -h, --help
-    if not pars.getParam():
-        sys.exit(0)
+    import argparse
+    args = argparse.ArgumentParser(description="This program demonstrates changes of allele frequency on single locus due to genetic drift.")
 
-    if pars.save != '':
-        pars.saveConfig(pars.save)
+    args.add_argument("--popSize",
+        default=1000,
+        type=check_positive_int,
+        help="Population Size") 
+    args.add_argument("--gen",
+        default=50,
+        type=check_positive_int,
+        help="Generations to Evolve")
+    args.add_argument("--recRate",
+        default=0.01,
+        type=check_probability,
+        help="Recombination Rate")
+    args.add_argument("--numRep",
+        default=5,
+        type=check_positive_int,
+        help="Number of Replicates")
+    args.add_argument("--measure",
+        default='D',
+        choices=['D', "D'", 'R2'],
+        help="LD measure to be displayed.")
+    args.add_argument("--saveFigure",
+        default='',
+        type=str,
+        help="Filename template to save figures to. They will be saved as e.g. 'filename_10.eps' The format of the figures is determined by the file extension.")
+    args = args.parse_args()
 
-    simuLDDecay(pars.size, pars.gen, pars.recRate, pars.numRep,
-        pars.measure, pars.saveFigure, useRPy)
+    simuLDDecay(**vars(args), useRPy = useRPy)
 
     # wait five seconds before exit
     if useRPy:
         print("Figure will be closed after five seconds.")
         time.sleep(5)
-
