@@ -115,20 +115,20 @@ if __name__ == '__main__':
     succCount = 0
     genRecord = []
     for r in range(rep):
-        print "Replicate ", r,
+        print("Replicate ", r)
         (succ, gen) = simu(N) 
         if succ:
             succCount += 1
             genRecord.append(gen)
-            print " success at generation ", gen
+            print(" success at generation ", gen)
         else:
-            print " failed"
+            print(" failed")
 
-    print "population size: ", N
-    print "Replicates: ", rep
-    print "Successful counts: ", succCount
+    print("population size: ", N)
+    print("Replicates: ", rep)
+    print("Successful counts: ", succCount)
     if succCount > 0:
-        print "Mean generation: ", sum(genRecord)*1.0/succCount
-        print "Minimal generation: ", min(genRecord)
-        print "Maxmimal generation: ", max(genRecord)
+        print("Mean generation: ", sum(genRecord)*1.0/succCount)
+        print("Minimal generation: ", min(genRecord))
+        print("Maxmimal generation: ", max(genRecord))
     
