@@ -37,11 +37,11 @@ def spatialMigrRates(xy, r):
 def printAlleleFreq(pop):
     'Print allele frequencies of all subpopulations'
     stat(pop, alleleFreq=[0], vars=['alleleFreq_sp'])
-    print 'Allele frequencies at generation', pop.dvars().gen
+    print('Allele frequencies at generation', pop.dvars().gen)
     for i in range(10):
         for j in range(10):
-            print '%.2f' % pop.dvars(10*i + j).alleleFreq[0][1],
-        print
+            print('%.2f' % pop.dvars(10*i + j).alleleFreq[0][1])
+        print()
     return True
 
 
