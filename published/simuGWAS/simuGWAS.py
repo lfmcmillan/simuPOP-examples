@@ -365,7 +365,7 @@ def simuGWAS(pars, pop, logger=None):
         if pars.trajFile:
             out = open(pars.trajFile, 'w')
             for gen in range(pars.expandGen):
-                print >> out, gen, ' '.join(['%.4f' % x for x in trajFunc(gen)])
+                print(gen, ' '.join(['%.4f' % x for x in trajFunc(gen)]), file=out)
             out.close()
     else:
         trajFunc = None
@@ -387,10 +387,10 @@ def simuGWAS(pars, pop, logger=None):
             recOp = Recombinator(rates=rate, loci=loc, infoFields='ind_id', output='>>%s' % pars.dumpRec)
         else:
             recOp = Recombinator(rates=rate, loci=loc)
-        print 'Scaled recombination at %.3f cM/Mb over %.2f centiMorgan genetic (%.0f bp physical) distance (first chromosome)' % \
+        print('Scaled recombination at %.3f cM/Mb over %.2f centiMorgan genetic (%.0f bp physical) distance (first chromosome)' % \
             (pars.recIntensity*1e6, (pop.dvars().geneticMap[pop.locusName(pop.numLoci(0)-1)] - \
                 pop.dvars().geneticMap[pop.locusName(0)]),
-                int(pop.locusPos(pop.numLoci(0)-1) - pop.locusPos(0)))
+                int(pop.locusPos(pop.numLoci(0)-1) - pop.locusPos(0))))
     except:
         # if not possible, use a physical map
         if pars.dumpRec:
